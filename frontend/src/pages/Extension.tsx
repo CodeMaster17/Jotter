@@ -8,7 +8,7 @@ const Extension = () => {
     const [activeTab, setActiveTab] = useState('links');
     // const { toast } = useToast();
     return (
-        <div className="w-[400px] min-h-[500px] p-4 bg-background text-foreground">
+        <div className="w-[300px] min-h-[400px] p-4 bg-background text-foreground">
             <header className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                     <Briefcase className="h-6 w-6 text-primary" />
