@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Home, Settings2 } from "lucide-react"
 
 import {
     Sidebar,
@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-// Menu items.
+// Sidebar navigation
 const items = [
     {
         title: "Home",
@@ -19,24 +19,9 @@ const items = [
         icon: Home,
     },
     {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
         title: "Settings",
-        url: "#",
-        icon: Settings,
+        url: "/dashboard/settings",
+        icon: Settings2,
     },
 ]
 
