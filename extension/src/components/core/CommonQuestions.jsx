@@ -1,38 +1,33 @@
-import { useState, useEffect } from 'react';
-import { Copy } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useToast } from "@/hooks/use-toast";
-import { storage } from '@/lib/storage';
+// import { Accordion } from "@/components/ui/accordion";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface Answer {
-    question: string;
-    answer: string;
-}
+// interface Answer {
+//     question: string;
+//     answer: string;
+// }
 
 export function CommonQuestions() {
-    const [answers, setAnswers] = useState<Answer[]>([]);
-    const { toast } = useToast();
+    // const [answers, setAnswers] = useState<Answer[]>([]);
+    // const { toast } = useToast();
 
-    useEffect(() => {
-        const loadData = async () => {
-            const data = await storage.get('answers');
-            if (data) {
-                setAnswers(data);
-            }
-        };
-        loadData();
-    }, []);
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         const data = await storage.get('answers');
+    //         if (data) {
+    //             setAnswers(data);
+    //         }
+    //     };
+    //     loadData();
+    // }, []);
 
-    const copyToClipboard = async (text: string) => {
-        await navigator.clipboard.writeText(text);
-        toast({
-            title: "Copied!",
-            description: "Answer has been copied to clipboard",
-            duration: 2000,
-        });
-    };
+    // const copyToClipboard = async (text: string) => {
+    //     await navigator.clipboard.writeText(text);
+    //     toast({
+    //         title: "Copied!",
+    //         description: "Answer has been copied to clipboard",
+    //         duration: 2000,
+    //     });
+    // };
 
     return (
         <div className="space-y-4">
@@ -42,7 +37,7 @@ export function CommonQuestions() {
                 </CardHeader>
                 <CardContent>
                     <Accordion type="single" collapsible className="w-full">
-                        {answers.map((item, index) => (
+                        {/* {answers.map((item, index) => (
                             <AccordionItem key={index} value={`item-${index}`}>
                                 <AccordionTrigger>{item.question}</AccordionTrigger>
                                 <AccordionContent>
@@ -59,7 +54,7 @@ export function CommonQuestions() {
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
-                        ))}
+                        ))} */}
                     </Accordion>
                 </CardContent>
             </Card>

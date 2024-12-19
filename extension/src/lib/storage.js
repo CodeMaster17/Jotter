@@ -1,17 +1,11 @@
-import { ILinkItem } from "@/types";
-
 class StorageService {
-  private isExtension: boolean;
-
   constructor() {
     this.isExtension =
       typeof chrome !== "undefined" && chrome.storage !== undefined;
   }
 
-  // Get method specific to ILinkItem keys and values
-  async get<T extends keyof ILinkItem>(
-    key: T
-  ): Promise<ILinkItem[T] | undefined> {
+  // Get method for retrieving values
+  async get(key) {
     if (this.isExtension) {
       return new Promise((resolve) => {
         chrome.storage.sync.get([key], (result) => {
@@ -20,15 +14,12 @@ class StorageService {
       });
     } else {
       const item = localStorage.getItem(key);
-      return item ? (JSON.parse(item) as ILinkItem[T]) : undefined;
+      return item ? JSON.parse(item) : undefined;
     }
   }
 
-  // Set method specific to ILinkItem keys and values
-  async set<T extends keyof ILinkItem>(
-    key: T,
-    value: ILinkItem[]
-  ): Promise<void> {
+  // Set method for storing values
+  async set(key, value) {
     if (this.isExtension) {
       return new Promise((resolve) => {
         chrome.storage.sync.set({ [key]: value }, resolve);

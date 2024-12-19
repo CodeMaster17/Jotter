@@ -26,5 +26,9 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "../extension/src/pages/Extension.tsx",
+    "../extension/src/components/core"
+  ]
 }
