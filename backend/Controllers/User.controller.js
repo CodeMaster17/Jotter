@@ -6,37 +6,44 @@ const getUserDetails = async (req, res) => {
         const userId = req.user._id;
         const user = await UserModel.findById(userId).populate('links');
 
-        console.log(user)
+        console.log(user);
         if (!user) {
             return res.status(404)
                 .json({
                     message: "User not found",
                     success: false
-                })
+                });
         }
         res.status(200)
             .json({
                 message: "User found",
                 success: true,
                 user
-            })
+            });
     } catch (err) {
         res.status(500)
             .json({
-                message: "Internal server errror",
+                message: "Internal server error",
                 success: false
-            })
+            });
     }
 }
 
 const addLinks = async (req, res) => {
     try {
-        const { linkedin, github, portfolio } = req.body;
+        const links = req.body; // Array of link objects
 
-        // Validation for required fields
-        if (!linkedin || !github || !portfolio) {
+        // Ensure body is an array and each link has the necessary fields
+        if (!Array.isArray(links)) {
             return res.status(400).json({
-                message: 'All link fields (linkedin, github, portfolio) are required.',
+                message: 'Request body must be an array of links.',
+                success: false
+            });
+        }
+
+        if (links.some(link => !link.type || !link.url)) {
+            return res.status(400).json({
+                message: 'Some fields are missing. Each link must have "type" and "url".',
                 success: false
             });
         }
@@ -49,18 +56,19 @@ const addLinks = async (req, res) => {
             return res.status(404).json({ message: 'User not found', success: false });
         }
 
-        // Create a new Link entry
-        const newLinks = new LinkModel({
-            linkedin,
-            github,
-            portfolio
-        });
+        // Create and save the new links
+        const newLinks = await Promise.all(links.map(async (link) => {
+            const newLink = new LinkModel({
+                type: link.type,
+                url: link.url
+            });
 
-        // Save the link and associate it with the user
-        await newLinks.save();
+            await newLink.save();
+            return newLink._id; // Return the link's ID to add to the user's links array
+        }));
 
-        // Update the user's links reference in the User model
-        user.links = newLinks._id;
+        // Add the new links to the user's links array
+        user.links = [...user.links, ...newLinks];
         await user.save();
 
         res.status(200).json({
@@ -77,7 +85,8 @@ const addLinks = async (req, res) => {
     }
 };
 
+
 module.exports = {
     getUserDetails,
     addLinks,
-}
+};

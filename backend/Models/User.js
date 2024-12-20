@@ -15,10 +15,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    links: {
+    links: [{
         type: Schema.Types.ObjectId,
         ref: 'links'
-    }
+    }]
 });
 
 const UserModel = mongoose.model('users', UserSchema);
