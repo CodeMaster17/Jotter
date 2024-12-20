@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { ProfileLinks } from "./ProfileLinks";
 
 const Tabs = () => {
     const [activeTab, setActiveTab] = useState("tab1");
 
     const tabs = [
-        { id: "tab1", label: "Links", content: "This is the content of Tab 1." },
+        { id: "tab1", label: "Links", content: <ProfileLinks /> },
         { id: "tab2", label: "Questions", content: "This is the content of Tab 2." },
         { id: "tab3", label: "Tab 3", content: "This is the content of Tab 3." },
     ];

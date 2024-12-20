@@ -1,19 +1,20 @@
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Extension from '../../extension/src/pages/Extension';
+import DashboardHome from './pages/DashboardHome';
+import DashboardLayout from './pages/DashboardLayout';
+
 function App() {
 
   return (
-    <>
-      <Extension />
-    </>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<Extension />} />
-    //     <Route path="/dashboard" element={<DashboardLayout />}>
-    //       <Route path="/dashboard/home" element={<DashboardHome />} />
-    //     </Route>
-    //   </Routes>
-    // </Router>
+    <Router>
+      <Routes>
+        {/* <Route path="/" element={<Extension />} /> */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="/dashboard/home" element={<DashboardHome />} />
+        </Route>
+      </Routes>
+    </Router>
   )
 }
 
