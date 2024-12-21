@@ -25,8 +25,8 @@ export interface IStorageData {
   }>;
 }
 
-export interface ILinkItem{
-    id: string;
-    type: string;
-    url: string;
+export interface ILinkItem {
+  _id: string;
+  type: string;
+  url: string;
 }
