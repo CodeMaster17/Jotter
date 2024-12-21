@@ -1,6 +1,5 @@
-import React from 'react';
 import { MousePointerClick } from 'lucide-react';
-import { AuthForm } from '@/components/AuthForm';
+import React from 'react';
 
 
 export function SignupPage() {

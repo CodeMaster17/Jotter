@@ -17,7 +17,7 @@ import { z } from "zod";
 const formSchema = z.object({
     email: z.string().min(2).max(50),
     password: z.string().min(6).max(50)
-})
+});
 export function LoginPage() {
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -26,10 +26,10 @@ export function LoginPage() {
             email: '',
             password: ''
         },
-    })
+    });
 
     const navigate = useNavigate();
-    const { toast } = useToast()
+    const { toast } = useToast();
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const { email, password } = values;
@@ -37,7 +37,7 @@ export function LoginPage() {
             toast({
                 title: 'Error',
                 description: 'Please fill in all fields',
-            })
+            });
         }
 
         try {
@@ -55,23 +55,23 @@ export function LoginPage() {
                 toast({
                     title: 'Login Successful',
                     description: 'Redirecting to home page',
-                })
+                });
                 localStorage.setItem('token', jwtToken);
                 localStorage.setItem('loggedInUser', name);
                 setTimeout(() => {
-                    navigate('/dashboard/home')
-                }, 1000)
+                    navigate('/dashboard/home');
+                }, 1000);
             } else if (error) {
                 const details = error?.details[0].message;
                 toast({
                     title: 'Error',
                     description: details,
-                })
+                });
             } else if (!success) {
                 toast({
                     title: 'Error',
                     description: message,
-                })
+                });
             }
 
         } catch (error) {
