@@ -93,7 +93,7 @@ const updateLink = async (req, res) => {
         linkValidationSchema.parse({ type, url });
 
         // Assume `links` is your database model
-        const updatedLink = await links.findByIdAndUpdate(
+        const updatedLink = await LinkModel.findByIdAndUpdate(
             id,
             { type, url },
             { new: true }
