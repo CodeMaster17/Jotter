@@ -139,10 +139,10 @@ const deleteLink = async (req, res) => {
         user.links = user.links.filter(linkId => linkId.toString() !== id);
         await user.save();
 
-        res.status(200).json({ message: "Link deleted successfully", deletedLink });
+        res.status(200).json({ success: true, message: "Link deleted successfully", deletedLink });
 
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ sucess: false, error: "Internal Server Error" });
     }
 };
 
