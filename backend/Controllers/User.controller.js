@@ -49,6 +49,14 @@ const addLinks = async (req, res) => {
             return res.status(404).json({ message: 'User not found', success: false });
         }
 
+        const existingLink = user.links.find((l) => l.type === link.type);
+        if (existingLink) {
+            return res.status(400).json({
+                message: `A link with type "${link.type}" already exists.`,
+                success: false,
+            });
+        }
+
         const newLink = new LinkModel({
             type: link.type,
             url: link.url
@@ -116,7 +124,6 @@ const updateLink = async (req, res) => {
 const deleteLink = async (req, res) => {
     try {
         const { id } = req.params;
-
         const deletedLink = await LinkModel.findByIdAndDelete(id);
         if (!deletedLink) {
             return res.status(404).json({ error: "Link not found" });
@@ -133,6 +140,7 @@ const deleteLink = async (req, res) => {
         await user.save();
 
         res.status(200).json({ message: "Link deleted successfully", deletedLink });
+
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });
     }
