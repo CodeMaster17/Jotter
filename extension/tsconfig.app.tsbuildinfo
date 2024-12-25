@@ -1,0 +1,15 @@
+{
+    "root": [
+        "./src/app.tsx",
+        "./src/main.tsx",
+        "./src/vite-env.d.ts",
+        "./src/components/core/Extension.tsx",
+        "./src/components/core/ProfileLinks.tsx",
+        "./src/components/ui/button.tsx",
+        "./src/lib/utils.ts",
+        "./components.json",
+        "./src/components/core/Tracker.tsx",
+        "./src/components/ui/tabs.tsx"
+    ],
+    "version": "5.7.2"
+}

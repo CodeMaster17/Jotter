@@ -1,9 +1,7 @@
 import { Briefcase } from 'lucide-react';
-import { useState } from 'react';
-import Tabs from '../components/core/Tabs';
+import Tracker from './Tracker';
+
 const Extension = () => {
-    const [activeTab, setActiveTab] = useState('links');
-    // const { toast } = useToast();
     return (
         <div className="w-[300px] min-h-[400px] p-4 bg-white text-foreground">
             <header className="flex items-center justify-between mb-6">
@@ -12,7 +10,7 @@ const Extension = () => {
                     <h1 className="text-xl font-bold">Job Application Helper</h1>
                 </div>
             </header>
-            <Tabs />
+            <Tracker />
         </div>
     )
 }

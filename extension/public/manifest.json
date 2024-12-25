@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Job Application Helper",
+    "version": "1.0",
+    "description": "Manage and access your professional links and common interview responses",
+    "side_panel": {
+        "default_path": "index.html"
+    },
+    "permissions": [
+        "storage",
+        "sidePanel",
+        "unlimitedStorage",
+        "activeTab",
+        "scripting",
+        "idle"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "background": {
+        "service_worker": "assets/scripts/serviceWorker.js"
+    }
+}
