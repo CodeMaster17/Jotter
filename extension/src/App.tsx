@@ -1,25 +1,29 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import Extension from './components/core/Extension'
+import './App.css';
+import { AuthContainer } from './components/core/AuthContainer';
+import Extension from './components/core/Extension';
+import { LoadingSpinner } from './components/ui/loadingSpinner';
+import { useAuth } from './hooks/useAuth';
+
 
 function App() {
 
-  const [showLogin, setShowLogin] = useState(false)
+  const { token, user, handleLogin, handleLogout } = useAuth();
 
-  useEffect(() => {
-    function getTokenfromLocalStorage() {
-      const token = localStorage.getItem('token')
-      if (token) {
-        setShowLogin(false)
-      }else{
-        setShowLogin(true)
-      }
-    }
-  }, [])
+  console.log("Token: ", token);
+
   return (
     <>
-    
-      <Extension />
+      <div className="w-full min-h-screen bg-background p-4">
+        {!token ? (
+          <AuthContainer onLogin={handleLogin} />
+        ) : user ? (
+          <div className="max-w-sm mx-auto">
+            <Extension userData={user} onLogout={handleLogout} />
+          </div>
+        ) : (
+          <LoadingSpinner />
+        )}
+      </div>
     </>
   )
 }

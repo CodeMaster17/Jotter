@@ -1,7 +1,20 @@
+import { ILinkItem } from '@/types';
 import { Briefcase } from 'lucide-react';
 import Tracker from './Tracker';
 
-const Extension = () => {
+interface TrackerProps {
+    userData: {
+        user: {
+            links: ILinkItem[]
+        }
+    },
+    onLogout: () => void;
+}
+
+const Extension = (
+    { userData, onLogout }: TrackerProps
+) => {
+    console.log("userData: ", userData);
     return (
         <div className="w-[300px] min-h-[400px] p-4 bg-white text-foreground">
             <header className="flex items-center justify-between mb-6">
@@ -10,7 +23,9 @@ const Extension = () => {
                     <h1 className="text-xl font-bold">Job Application Helper</h1>
                 </div>
             </header>
-            <Tracker />
+            <Tracker
+                userData={userData.user.links} onLogout={onLogout}
+            />
         </div>
     )
 }

@@ -1,0 +1,18 @@
+{
+    "root": [
+        "./src/app.tsx",
+        "./src/auth.ts",
+        "./src/index.d.ts",
+        "./src/main.tsx",
+        "./src/vite-env.d.ts",
+        "./src/components/core/extension.tsx",
+        "./src/components/core/loginpage.tsx",
+        "./src/components/core/profilelinks.tsx",
+        "./src/components/core/tracker.tsx",
+        "./src/components/ui/button.tsx",
+        "./src/components/ui/tabs.tsx",
+        "./src/lib/utils.ts"
+    ],
+    "errors": true,
+    "version": "5.6.3"
+}
