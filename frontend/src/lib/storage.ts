@@ -89,7 +89,7 @@ class StorageService {
         chrome.storage.sync.set({ [key]: value }, resolve);
       });
     } else {
-      await this.indexedDBService.set(key as string, value);
+      return this.indexedDBService.set(key as string, value);
     }
   }
 }

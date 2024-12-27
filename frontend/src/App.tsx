@@ -10,6 +10,11 @@ import { SignupPage } from './pages/SignUp';
 import { AuthProvider } from "./context/auth/AuthProvider";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 function App() {
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // const PrivateRoute = ({ element }) => {
+  //   return isAuthenticated ? element : <Navigate to="/login" />
+  // }
 
 
 

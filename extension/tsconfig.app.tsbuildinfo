@@ -1,0 +1,26 @@
+{
+    "root": [
+        "./src/components/ui/button.tsx",
+        "./src/components/ui/tabs.tsx",
+        "./src/components/ui/form.tsx",
+        "./src/components/ui/input.tsx",
+        "./src/components/ui/loadingSpinner.tsx",
+        "./src/components/ui/label.tsx",
+        "./src/components/core/Extension.tsx",
+        "./src/components/core/ProfileLinks.tsx",
+        "./src/components/core/Tracker.tsx",
+        "./src/components/core/LoginPage.tsx",
+        "./src/components/core/AuthContainer.tsx",
+        "./src/lib/utils.ts",
+        "./src/lib/api.ts",
+        "./src/lib/storage.ts",
+        "./src/hooks/useAuth.ts",
+        "./src/types/index.ts",
+        "./src/app.tsx",
+        "./src/main.tsx",
+        "./src/vite-env.d.ts",
+        "./components.json",
+        "./src/components/"
+    ],
+    "version": "5.7.2"
+}

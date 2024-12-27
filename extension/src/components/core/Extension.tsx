@@ -1,9 +1,20 @@
+import { ILinkItem } from '@/types';
 import { Briefcase } from 'lucide-react';
-import { useState } from 'react';
-import Tabs from '../components/core/Tabs';
-const Extension = () => {
-    const [activeTab, setActiveTab] = useState('links');
-    // const { toast } = useToast();
+import Tracker from './Tracker';
+
+interface TrackerProps {
+    userData: {
+        user: {
+            links: ILinkItem[]
+        }
+    },
+    onLogout: () => void;
+}
+
+const Extension = (
+    { userData, onLogout }: TrackerProps
+) => {
+    console.log("userData: ", userData);
     return (
         <div className="w-[300px] min-h-[400px] p-4 bg-white text-foreground">
             <header className="flex items-center justify-between mb-6">
@@ -12,7 +23,9 @@ const Extension = () => {
                     <h1 className="text-xl font-bold">Job Application Helper</h1>
                 </div>
             </header>
-            <Tabs />
+            <Tracker
+                userData={userData.user.links} onLogout={onLogout}
+            />
         </div>
     )
 }
