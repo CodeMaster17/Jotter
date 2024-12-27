@@ -1,4 +1,5 @@
 
+import { Toaster } from "@/components/ui/toaster";
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import DashboardLayout from './pages/DashboardLayout';
@@ -6,7 +7,8 @@ import Home from './pages/Home';
 import HomeDashboard from './pages/HomeDashboard';
 import { LoginPage } from './pages/Login';
 import { SignupPage } from './pages/SignUp';
-import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "./context/auth/AuthProvider";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 function App() {
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -14,20 +16,35 @@ function App() {
   //   return isAuthenticated ? element : <Navigate to="/login" />
   // }
 
+
+
   return (
-    <Router>
-      {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated} /> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        {/* <Route path='/dashboard' element={<Navigate to="/login" />} /> */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route path="/dashboard/home" element={<HomeDashboard />} />
-        </Route>
-      </Routes>
-      <Toaster />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/home"
+            element={
+              <ProtectedRoute>
+                <HomeDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Toaster />
+      </Router>
+    </AuthProvider>
   );
 }
 
