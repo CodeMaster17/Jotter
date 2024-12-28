@@ -1,27 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { config } from "@/config";
+import { errorMessage } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
+import { getLinkIcon } from "@/lib/get-icon";
 import { ILinkItem } from "@/types";
-import { FileText, Github, Linkedin, Link as LinkIcon, Pencil, Plus, Save, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { z } from "zod";
-
-
-
-
-// FIXME: USed at 2 places, in this file and ProfileLink.tsx
-const getLinkIcon = (type: string) => {
-    switch (type.toLowerCase()) {
-        case "github":
-            return <Github className="w-5 h-5" />;
-        case "linkedin":
-            return <Linkedin className="w-5 h-5" />;
-        case "resume":
-            return <FileText className="w-5 h-5" />;
-        default:
-            return <LinkIcon className="w-5 h-5" />;
-    }
-};
 
 const urlSchema = z.string().url();
 
@@ -114,8 +99,7 @@ const HomeDashboard = () => {
             const data = await res.json();
             if (data.success) {
                 toast({
-                    title: 'Link Deleted',
-                    description: 'Link deleted successfully',
+                    description: errorMessage.LINK_DELETED_SUCCESS,
                 });
                 setLinks(filteredLink);
             }
