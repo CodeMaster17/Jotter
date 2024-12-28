@@ -20,22 +20,23 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/dashboard"
+              element={
                 <DashboardLayout />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard/home"
-            element={
-              <ProtectedRoute>
-                <HomeDashboard />
-              </ProtectedRoute>
-            }
-          />
+              }
+            >
+              <Route
+                path="/dashboard/home"
+                element={
+
+                  <HomeDashboard />
+
+                }
+              />
+            </Route>
+          </Route>
         </Routes>
         <Toaster />
       </Router>
