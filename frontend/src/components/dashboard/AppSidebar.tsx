@@ -1,4 +1,4 @@
-import { Home, Settings2 } from "lucide-react"
+import { Home } from "lucide-react";
 
 import {
     Sidebar,
@@ -9,7 +9,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // Sidebar navigation
 const items = [
@@ -17,25 +17,23 @@ const items = [
         title: "Home",
         url: "/dashboard/home",
         icon: Home,
-    },
-    {
-        title: "Settings",
-        url: "/dashboard/settings",
-        icon: Settings2,
-    },
-]
+    }
+];
 
 export function AppSidebar() {
+
+    const activeURL = window.location.pathname;
+
     return (
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel>Two Clicks</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
+                                    <SidebarMenuButton asChild className={activeURL === item.url ? "bg-gray-200" : ""}>
                                         <a href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
@@ -48,5 +46,5 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }

@@ -1,27 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { config } from "@/config";
+import { errorMessage } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
+import { getLinkIcon } from "@/lib/get-icon";
 import { ILinkItem } from "@/types";
-import { FileText, Github, Linkedin, Link as LinkIcon, Pencil, Plus, Save, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Save, Trash2 } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { z } from "zod";
-
-
-
-
-// FIXME: USed at 2 places, in this file and ProfileLink.tsx
-const getLinkIcon = (type: string) => {
-    switch (type.toLowerCase()) {
-        case "github":
-            return <Github className="w-5 h-5" />;
-        case "linkedin":
-            return <Linkedin className="w-5 h-5" />;
-        case "resume":
-            return <FileText className="w-5 h-5" />;
-        default:
-            return <LinkIcon className="w-5 h-5" />;
-    }
-};
 
 const urlSchema = z.string().url();
 
@@ -33,10 +18,51 @@ const HomeDashboard = () => {
     const [editMode, setEditMode] = useState<boolean>(false);
     const [activeEditInput, setActiveEditInput] = useState<string | null>(null);
     const [updateButtonState, setUpdateButtonState] = useState<boolean>(false);
+    const [loading, setLoading] = useState(false);
+    console.log(loading);
+    useEffect(() => {
+        async function fetchLinks() {
+            setLoading(true);
+            try {
+
+                const links = await fetch(`${config.BACKEND_URL}/links/details`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `${window.localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                });
+                const data = await links.json();
+                if (data.user.links.length > 0) {
+                    setLinks(data.user.links || []);
+                    toast({
+                        title: 'Success',
+                        description: `Successfully fetched links`,
+                    });
+                } else {
+                    toast({
+                        variant: "destructive",
+                        title: 'No Links',
+                        description: `No links found`,
+                    });
+                }
+            } catch (error) {
+                toast({
+                    variant: "destructive",
+                    title: 'Error',
+                    description: `Failed to fetch links: ${error}`,
+                });
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchLinks();
+    }, []);
 
     const { toast } = useToast();
     // validating URL
-    const validateUrl = (url: string) => {
+    const validateUrl = (url: string): boolean => {
         try {
             urlSchema.parse(url);
             setError(null);
@@ -44,17 +70,24 @@ const HomeDashboard = () => {
         } catch (error) {
             setError(`Invalid URL. ${error}`);
             return false;
+        } finally {
+            setError(null);
         }
     };
 
-    const handleAddLink = async () => {
+    const handleAddLink = async (toBeSavedLink: { url: string; label: string }) => {
+        if (!validateUrl(toBeSavedLink.url)) {
+            setError('Invalid URL. Please check and try again.'); // Added error message for validation
+            return;
+        }
+        setError(null);
         setEditMode(true);
         const newLink = {
             _id: Date.now().toString(),
             type: '',
             url: '',
         };
-        setLinks([...links, newLink]);
+        setLinks((prev) => [...prev, newLink]);
         setActiveEditInput(newLink._id);
         setUpdateButtonState(false);
     };
@@ -114,8 +147,7 @@ const HomeDashboard = () => {
             const data = await res.json();
             if (data.success) {
                 toast({
-                    title: 'Link Deleted',
-                    description: 'Link deleted successfully',
+                    description: errorMessage.LINK_DELETED_SUCCESS,
                 });
                 setLinks(filteredLink);
             }
@@ -173,48 +205,14 @@ const HomeDashboard = () => {
         }
     };
 
-    useEffect(() => {
-        async function fetchLinks() {
-            try {
 
-                const links = await fetch(`${config.BACKEND_URL}/links/details`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `${localStorage.getItem('token')}`,
-                        'Content-Type': 'application/json'
-                    },
-                });
-                const data = await links.json();
-                if (data.user.links.length > 0) {
-                    setLinks(data.user.links);
-                    toast({
-                        title: 'Success',
-                        description: `Successfully fetched links`,
-                    });
-                } else {
-                    toast({
-                        variant: "destructive",
-                        title: 'No Links',
-                        description: `No links found`,
-                    });
-                }
-            } catch (error) {
-                toast({
-                    variant: "destructive",
-                    title: 'Error',
-                    description: `Failed to fetch links: ${error}`,
-                });
-            }
-        }
 
-        fetchLinks();
-    }, []);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-6 flex items-center justify-center">
             <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-3xl">
                 <div className="space-y-4">
-                    {links.map((link) => (
+                    {links.length > 0 && links.map((link) => (
                         <div
                             key={link._id}
                             className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg transition-all hover:shadow-md"
@@ -291,13 +289,12 @@ const HomeDashboard = () => {
                 )}
                 <div className="mt-6 flex gap-4">
                     <button
-                        onClick={handleAddLink}
+                        onClick={() => handleAddLink({ url: 'https://example.com', label: 'Example' })}
                         className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
                     >
                         <Plus className="w-5 h-5" />
                         Add Link
                     </button>
-
 
                 </div>
             </div>

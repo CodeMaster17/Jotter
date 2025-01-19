@@ -12,7 +12,6 @@ import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MousePointerClick } from 'lucide-react';
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
 import { z } from "zod";
 const formSchema = z.object({
     email: z.string().min(2).max(50),
@@ -28,7 +27,6 @@ export function LoginPage() {
         },
     });
 
-    const navigate = useNavigate();
     const { toast } = useToast();
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -56,11 +54,9 @@ export function LoginPage() {
                     title: 'Login Successful',
                     description: 'Redirecting to home page',
                 });
-                localStorage.setItem('token', jwtToken);
-                localStorage.setItem('loggedInUser', name);
-                setTimeout(() => {
-                    navigate('/dashboard/home');
-                }, 1000);
+                window.localStorage.setItem('token', jwtToken);
+                window.localStorage.setItem('loggedInUser', name);
+                window.location.href = '/dashboard/home';
             } else if (error) {
                 const details = error?.details[0].message;
                 toast({
